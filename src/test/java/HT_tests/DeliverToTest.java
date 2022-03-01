@@ -28,6 +28,7 @@ public class DeliverToTest {
     public void cleasnUpTest() {
         driver.close();
         driver.quit();
+
     }
 
     @Test
@@ -35,7 +36,6 @@ public class DeliverToTest {
         driver.get("https://www.amazon.com/");
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.amazon.com/",
                 "The current link is not as expected.");
-
         WebElement deliverToIcon = driver.findElement(By.xpath("//*[@id=\"nav-global-location-slot\"]"));
         deliverToIcon.click();
 
@@ -56,5 +56,36 @@ public class DeliverToTest {
 
         WebElement deliverArea = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"glow-ingress-line2\" and contains(text(),\"Dover\")]")));
         Assert.assertEquals(deliverArea.getText().trim(), "Dover 19901\u200C");
+    }
+
+    @Test
+    public void checkDeliveryToPolandTest() {
+        driver.get("https://www.amazon.com/");
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.amazon.com/",
+                "The current link is not as expected.");
+
+        WebElement deliverToIcon = driver.findElement(By.xpath("//*[@id=\"nav-global-location-slot\"]"));
+        deliverToIcon.click();
+
+        WebElement outsideUsList = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"GLUXCountryListDropdown\"]/span")));
+        outsideUsList.click();
+        WebElement polandListElement = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"a-popover-2\"]/div/div/ul/li/a[contains(text(), \"Poland\")]")));
+        Assert.assertEquals(polandListElement.getText().trim(), "Poland");
+    }
+
+    @Test
+    public void itemDeliverToSettedAreaTest() {
+        driver.get("https://www.amazon.com/");
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.amazon.com/",
+                "The current link is not as expected.");
+
+        WebElement deliverToIcon = driver.findElement(By.xpath("//*[@id=\"nav-global-location-slot\"]"));
+        deliverToIcon.click();
+
+        WebElement outsideUsList = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"GLUXCountryListDropdown\"]/span")));
+        outsideUsList.click();
+
+        WebElement countryChoice = new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"a-popover-2\"]/div/div/ul/li/a[contains(text(), \"Italy\")]")));
+        countryChoice.click();
     }
 }
